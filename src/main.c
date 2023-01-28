@@ -8,6 +8,9 @@
 #include "misc/prepare.h"
 
 int main(int argc, char* argv[]){
+
+    printf("%i %i\n", sizeof(micro_block), sizeof(micro_file));
+
     // argv[0] - .elf path
     
     // argv[1] - current shell path

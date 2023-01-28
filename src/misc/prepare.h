@@ -4,7 +4,7 @@
 #include <micros.h>
 #include "../file_struct.h"
 
-// prepares a file for edition
-bool micro_prepare_file(micro_file* file_ptr);
+// prepares a file for edition, true when succesful, false when not
+bool micro_prepare_file(micro_file* file_ptr, const char* path);
 
 #endif
