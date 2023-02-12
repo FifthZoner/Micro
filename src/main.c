@@ -33,9 +33,10 @@ int main(int argc, char* argv[]){
             printf("Error while creating the file!\n");
             return -1;
         }
+        printf("Created file!\n");
     }
 
-    printf("Reading file...");
+    printf("Reading file...\n");
 
     micro_file file;
     micro_prepare_file(&file, file_path);
