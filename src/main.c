@@ -39,7 +39,7 @@ int main(int argc, char* argv[]){
     printf("Reading file...\n");
 
     micro_file file;
-    micro_prepare_file(&file, file_path);
+    micro_prepare_file(&file, "A:/DATA/HELP.TXT");
 
     free(file_path);
 
