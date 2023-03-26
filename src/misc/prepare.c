@@ -41,8 +41,8 @@ bool micro_prepare_file(micro_file* file_ptr, const char* path){
             size_to_read = micro_read_buffer;
         }
 
-        //printf("Calculated %i bytes to be read at %i\n", size_to_read, size_read);
-        micros_process_current_process_sleep(200);
+        printf("Calculated %i bytes to be read at %i\n", size_to_read, size_read);
+        micros_process_current_process_sleep(500);
 
         micros_filesystem_read_file(path, buffer, size_read, size_to_read);
 
@@ -62,8 +62,8 @@ bool micro_prepare_file(micro_file* file_ptr, const char* path){
             }
         }
 
-        //printf("Reading %i new lines of text...\n", newlines);
-        micros_process_current_process_sleep(200);
+        printf("Reading %i new lines of text...\n", newlines);
+        micros_process_current_process_sleep(500);
 
         // preparing space for the new data
         uint32_t lines_to_set = last_block->size + newlines;
@@ -91,32 +91,52 @@ bool micro_prepare_file(micro_file* file_ptr, const char* path){
                 
                 // temp
                 for (int m = 0; m < n - last_start; m++){
-                    printf("%c", buffer[last_start + m]);
+                    //printf("%c", buffer[last_start + m]);
                 }
-                printf("\n");
+                //printf("\n");
                 
                 
 
-                // case where a strlen check is needed
-                if (line_unfinished == true && newlines_read == 0){
-                    
+                // case where some text is already here
+                if (line_unfinished == true){
+                    line_unfinished = false;
+                    //last_block->text[n + last_block->size] = (char*)realloc(last_block->text[n + last_block->size], (n - last_start + 1 + line_unfinished_offset) * sizeof(char));
+                    for (int m = 0; m < n - last_start; m++){
+                        //last_block->text[n + last_block->size][m + line_unfinished_offset] = buffer[last_start + m];
+                    }
+                    //last_block->text[n + last_block->size][n - last_start + line_unfinished_offset] = '\0';
+
+                }
+                else{
+                    //last_block->text[n + last_block->size] = (char*)malloc((n - last_start + 1) * sizeof(char));
+                    for (int m = 0; m < n - last_start; m++){
+                        //last_block->text[n + last_block->size][m] = buffer[last_start + m];
+                    }
+                    //last_block->text[n + last_block->size][n - last_start] = '\0';
                 }
 
                 last_start = n + 1;
-                
             }
         }
 
+        
+        
+
+        // last line and no newlines case
+
         if (next_line_unfinished){
             for (int m = last_start; m < size_to_read; m++){
-                    printf("%c", buffer[m]);
+                    //printf("%c", buffer[m]);
+                    micros_process_current_process_sleep(200);
                 }
         }
 
+        printf("hefsg\n");
+        micros_process_current_process_sleep(500);
 
 
         last_block->size = lines_to_set;
-
+        newlines -= newlines_read;
         size_read += size_to_read;
 
 
